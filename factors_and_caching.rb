@@ -22,9 +22,7 @@ class Factors
       end
       output[num] = factors_of_num_in_input
     end
-    File.open("cache.yml","w") do |f|
-      f.write(YAML::dump(CACHE))
-    end
+    write_to_cache
     output
   end
 
@@ -33,6 +31,7 @@ class Factors
     input.each do |num|
       output[num] = get_reverse_factors(num)
     end
+    write_to_cache
     output
   end
 
@@ -59,6 +58,12 @@ class Factors
         end
         CACHE[:reverse_factors][num] = rev_factors
         rev_factors
+      end
+    end
+
+    def write_to_cache
+      File.open("cache.yml","w") do |f|
+        f.write(YAML::dump(CACHE))
       end
     end
 end
